@@ -1,11 +1,5 @@
 # 포토그램 - 인스타그램 클론 코딩
 
-### STS 툴 버그가 발견되면 다른 버전으로 다운 받는 법
-- https://github.com/spring-projects/sts4/wiki/Previous-Versions
-
-### STS 툴에 세팅하기 - 플러그인 설정 (JSP, Javascript)
-- https://blog.naver.com/getinthere/222322821611
-
 ### 의존성
 
 - Sring Boot DevTools
@@ -40,8 +34,8 @@
 ### 데이터베이스
 
 ```sql
-create user 'cos'@'%' identified by 'cos1234';
-GRANT ALL PRIVILEGES ON *.* TO 'cos'@'%';
+create user 'cos'@'localhost' identified by 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'cos'@'localhost';
 create database photogram;
 ```
 
@@ -66,7 +60,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/photogram?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
     username: cos
-    password: cos1234
+    password: password
     
   jpa:
     open-in-view: true
@@ -86,8 +80,6 @@ spring:
       name: test
       password: 1234   
 
-#file:
-#  path: C:/src/springbootwork-sts/upload/
 ```
 
 ### 태그라이브러리
