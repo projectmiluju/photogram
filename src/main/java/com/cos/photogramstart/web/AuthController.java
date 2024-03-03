@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @Controller // 1.IoC 2. 파일을 리턴하는 컨트롤러
 public class AuthController {
@@ -34,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signup")
-    public String signup(SignupDto signupDto){
+    public String signup(@Valid SignupDto signupDto){
 
         User user = signupDto.toEntity();
 //        log.info(signupDto.toString());
