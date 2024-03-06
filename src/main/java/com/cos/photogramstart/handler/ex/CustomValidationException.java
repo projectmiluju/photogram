@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class CustomValidationException extends RuntimeException{
 
-    private static final long serialVersionID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Map<String, String> errorMap;
 
