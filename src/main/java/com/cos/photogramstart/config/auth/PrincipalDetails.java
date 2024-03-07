@@ -39,6 +39,7 @@ public class PrincipalDetails implements UserDetails {
 
     }
 
+
     @Override
     public String getUsername() {
 
@@ -70,7 +71,7 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
 
-        return false;
+        return true;
 
     }
 
