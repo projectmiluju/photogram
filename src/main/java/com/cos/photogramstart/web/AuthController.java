@@ -25,11 +25,7 @@ public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    private AuthService authService;
-
-    public AuthController(AuthService authService){
-        this.authService = authService;
-    }
+    private final AuthService authService;
 
     @GetMapping("/auth/signin")
     public String signinForm(){
