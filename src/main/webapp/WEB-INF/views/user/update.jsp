@@ -88,7 +88,7 @@
 				<div class="content-item__11">
 					<div class="item__title"></div>
 					<div class="item__input">
-						<button>제출</button>
+						<button onclick="update()">제출</button>
 					</div>
 				</div>
 				<!--제출버튼end-->
