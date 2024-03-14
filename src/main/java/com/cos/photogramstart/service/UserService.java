@@ -22,18 +22,20 @@ public class UserService {
 
 
         userEntity.setName(user.getName());
-
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
 
-        userEntity.setPassword(encPassword);
+        userEntity.setPassword(user.getPassword());
         userEntity.setBio(user.getBio());
         userEntity.setWebsite(user.getWebsite());
         userEntity.setPhone(user.getPhone());
         userEntity.setGender(user.getGender());
 
-
-        return userEntity;
+        if (userEntity.getPassword() == null) {
+            return userEntity;
+        } else {
+            userEntity.setPassword(encPassword);
+            return userEntity;
+        }
     }
-
 }

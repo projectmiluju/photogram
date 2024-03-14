@@ -4,6 +4,7 @@ package com.cos.photogramstart.web;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.AuthService;
+import com.cos.photogramstart.util.Script;
 import com.cos.photogramstart.web.dto.auth.SignupDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class AuthController {
             User userEntity = authService.회원가입(user);
             System.out.println(userEntity);
 
-            return "auth/signin";
+            return Script.href("회원가입에 성공하셨습니다.", "/auth/signin");
 
         }
     }
