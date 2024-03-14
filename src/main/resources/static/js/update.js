@@ -5,14 +5,14 @@ function update(userId) {
 
     $.ajax({
         type: "put",
-        url: '/api/user/${userId}',
+        url: `/api/user/${userId}`,
         data: data,
-        contentType: "application/x-www-form-urlencoded: charset=utf-8",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "json"
     }).done(res => {
         console.log("update 성공",res);
         alert("회원정보가 성공적으로 수정되었습니다.")
-        location.href = '/user/${userId}';
+        location.href = `/user/${userId}`;
     }).fail(error => {
         console.log("update 실패", error);
     });

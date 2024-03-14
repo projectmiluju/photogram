@@ -24,6 +24,7 @@ public class UserApiController {
 
         User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
         principalDetails.setUser(userEntity);
+        System.out.println(userUpdateDto);
         return new CMRespDto<>(1, "회원정보수정완료", userEntity);
     }
 }
