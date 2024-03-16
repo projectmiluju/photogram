@@ -43,10 +43,10 @@ public class User {
 
     private String role;
 
-    private LocalDateTime createData;
+    private LocalDateTime createDate;
 
     @PrePersist
     public void createDate(){
-        this.createData = LocalDateTime.now();
+        this.createDate = LocalDateTime.now();
     }
 }
