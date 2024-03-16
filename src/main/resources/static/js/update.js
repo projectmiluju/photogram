@@ -15,6 +15,11 @@ function update(userId, event) {
         alert("회원정보가 성공적으로 수정되었습니다.");
         location.href = `/user/${userId}`;
     }).fail(error => {
-        alert("회원정보 수정에 실패했습니다. 원인 : " + JSON.stringify((error.responseJson.data)));
+        if (error.data == null){
+            alert(error.responseJson.message);
+        }else{
+            alert("회원정보 수정에 실패했습니다. 원인 : " + JSON.stringify(error.responseJson.data));
+        }
+
     });
 }
