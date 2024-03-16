@@ -3,7 +3,7 @@ package com.cos.photogramstart.web.api;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.user.User;
-import com.cos.photogramstart.handler.ex.CustomValidationException;
+import com.cos.photogramstart.handler.CustomValidationApiException;
 import com.cos.photogramstart.service.UserService;
 import com.cos.photogramstart.web.dto.CMRespDto;
 import com.cos.photogramstart.web.dto.user.UserUpdateDto;
@@ -38,7 +38,7 @@ public class UserApiController {
                 errorMap.put(error.getField(), error.getDefaultMessage());
                 System.out.println(error.getDefaultMessage());
             }
-            throw new CustomValidationException("유효성 검사 실패", errorMap);
+            throw new CustomValidationApiException("유효성 검사 실패", errorMap);
         } else {
             User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
             principalDetails.setUser(userEntity);

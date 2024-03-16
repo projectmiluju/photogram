@@ -21,11 +21,7 @@ public class UserService {
     @Transactional
     public User 회원수정(Integer id, User user){
 
-        User userEntity = userRepository.findById(id).orElseThrow(() -> {
-
-            return new CustomValidationApiException("찾을 수 없는 ID입니다.");
-
-        });
+        User userEntity = userRepository.findById(id).orElseThrow(() -> new CustomValidationApiException("찾을 수 없는 ID입니다."));
 
 
         userEntity.setName(user.getName());
