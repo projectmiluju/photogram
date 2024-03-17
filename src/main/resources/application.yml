@@ -36,5 +36,6 @@ spring:
       name: test
       password: 1234   
 
-#file:
-#  path: C:/workspace/springbootwork/upload/
+# 파일이 저장될 커스텀 경로 #
+file:
+  path: C/Users/wonyong/Desktop/JAVA/Photogram/src/main/resources/static/images/
