@@ -38,4 +38,4 @@ spring:
 
 # 파일이 저장될 커스텀 경로 #
 file:
-  path: /Users/wonyong/Desktop/JAVA/Photogram/src/main/resources/static/images/
+  path: /Users/wonyong/Desktop/JAVA/
