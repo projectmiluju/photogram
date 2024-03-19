@@ -33,7 +33,7 @@ public class ImageService {
 
 
         String imageFileName = uuid + "_" + imageUploadDto.getFile().getOriginalFilename();
-        System.out.println(imageFileName);
+//        System.out.println(imageFileName);
         Path imageFilePath = Paths.get(uploadFolder+imageFileName);
         try {
             Files.write(imageFilePath, imageUploadDto.getFile().getBytes());
