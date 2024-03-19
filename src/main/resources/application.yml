@@ -39,4 +39,4 @@ spring:
 
 # 파일이 저장될 커스텀 경로 #
 file:
-  path: /Users/wonyong/Desktop/JAVA/upload/
+  path: /Users/wonyong/Desktop/upload/
