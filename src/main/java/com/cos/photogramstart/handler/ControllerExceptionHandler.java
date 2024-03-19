@@ -40,7 +40,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(CustomException.class)
-    public String customException(CustomException e){
+    public String exception(CustomException e){
         return Script.back(e.getMessage());
     }
 

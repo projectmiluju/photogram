@@ -1,9 +1,9 @@
 package com.cos.photogramstart.web;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
-
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
