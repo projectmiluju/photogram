@@ -7,8 +7,7 @@ import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,12 +40,15 @@ public class UserService {
         }
     }
 
+    @Transactional(readOnly = true)
     public User 회원프로필(Integer userId){
+
         User userEntity = userRepository.findById(userId).orElseThrow(() -> {
             throw new CustomException("존재하지 않는 유저의 페이지입니다.");
         });
-        System.out.println("========================");
-        userEntity.getImages().get(0);
+
+//        System.out.println("========================");
+//        userEntity.getImages().get(0);
         return userEntity;
     }
 }

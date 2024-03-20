@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,7 +42,7 @@ public class ImageService {
         }
 
         Image image = imageUploadDto.toEntity(imageFileName, principalDetails.getUser());
-        Image imageEntity = imageRepository.save(image);
-        System.out.println(imageEntity);
+        imageRepository.save(image);
+//        System.out.println(imageEntity);
     }
 }

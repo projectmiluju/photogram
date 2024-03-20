@@ -4,8 +4,8 @@ import com.cos.photogramstart.domain.subscribe.SubscribeRepository;
 import com.cos.photogramstart.handler.ex.CustomApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
