@@ -60,7 +60,7 @@ public class UserService {
         dto.setImageCount(userEntity.getImages().size());
 
         Integer subscribeState = subscribeRepository.mSubscribeState(principalId, pageUserId);
-        Integer subscribeCount = subscribeRepository.mSubscribeCount(principalId);
+        Integer subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
 
         dto.setSubscribeState(subscribeState == 1);
         dto.setSubscribeCount(subscribeCount);
