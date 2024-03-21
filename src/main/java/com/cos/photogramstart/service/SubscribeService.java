@@ -17,7 +17,7 @@ public class SubscribeService {
     public void 구독하기(Integer fromUserId, Integer toUserId) {
 
         try {
-            subscribeRepository.mSubScribe(fromUserId, toUserId);
+            subscribeRepository.mSubscribe(fromUserId, toUserId);
         } catch (Exception e){
             throw new CustomApiException("이미 구독한 사용자 입니다.");
         }

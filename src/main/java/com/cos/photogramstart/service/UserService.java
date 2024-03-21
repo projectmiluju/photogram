@@ -1,5 +1,6 @@
 package com.cos.photogramstart.service;
 
+import com.cos.photogramstart.domain.subscribe.SubscribeRepository;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomException;
@@ -16,6 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SubscribeRepository subscribeRepository;
 
     @Transactional
     public User 회원수정(Integer id, User user){
@@ -56,6 +58,13 @@ public class UserService {
         dto.setUser(userEntity);
         dto.setPageOwnerState(pageUserId.equals(principalId));
         dto.setImageCount(userEntity.getImages().size());
+
+        Integer subscribeState = subscribeRepository.mSubscribeState(principalId, pageUserId);
+        Integer subscribeCount = subscribeRepository.mSubscribeCount(principalId);
+
+        dto.setSubscribeState(subscribeState == 1);
+        dto.setSubscribeCount(subscribeCount);
+
 
         return dto;
     }
