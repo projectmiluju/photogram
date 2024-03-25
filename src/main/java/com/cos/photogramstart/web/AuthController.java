@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller // 1.IoC 2. 파일을 리턴하는 컨트롤러
 public class AuthController {
 
-    private static final Logger log = LoggerFactory.getLogger(AuthController.class)
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @GetMapping("/auth/signin")
     public String signinForm(){
