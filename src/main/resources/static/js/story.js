@@ -104,15 +104,46 @@ $(window).scroll(() => {
 
 // (3) 좋아요, 안좋아요
 function toggleLike(imageId) {
-	let likeIcon = $("#storyLikeIcon-${imageId}");
+	let likeIcon = $(`#storyLikeIcon-${imageId}`);
+
 	if (likeIcon.hasClass("far")) {
-		likeIcon.addClass("fas");
-		likeIcon.addClass("active");
-		likeIcon.removeClass("far");
+
+		$.ajax({
+			type: "post",
+			url: `/api/image/${imageId}/likes`,
+			dataType: "json"
+		}).done(res => {
+
+			let likesCountStr = $(`#storyLikeCount-${imageId}`).text();
+			let likesCount = Number(likesCountStr) + 1;
+			$(`#storyLikeCount-${imageId}`).text(likesCount);
+
+			likeIcon.addClass("fas");
+			likeIcon.addClass("active");
+			likeIcon.removeClass("far");
+		}).fail(error => {
+			console.log("오류", error)
+		});
+
 	} else {
-		likeIcon.removeClass("fas");
-		likeIcon.removeClass("active");
-		likeIcon.addClass("far");
+
+		$.ajax({
+			type: "delete",
+			url: `/api/image/${imageId}/likes`,
+			dataType: "json"
+		}).done(res => {
+
+			let likesCountStr = $(`#storyLikeCount-${imageId}`).text();
+			let likesCount = Number(likesCountStr) - 1;
+			$(`#storyLikeCount-${imageId}`).text(likesCount);
+
+			likeIcon.removeClass("fas");
+			likeIcon.removeClass("active");
+			likeIcon.addClass("far");
+		}).fail(error => {
+			console.log("오류", error)
+		});
+
 	}
 }
 
