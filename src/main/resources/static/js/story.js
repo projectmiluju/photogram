@@ -9,11 +9,74 @@
 
 // (1) 스토리 로드하기
 function storyLoad() {
+	$.ajax({
+		url: `/api/image`,
+		dataType: "json"
+	}).done(res => {
+		console.log("성공", res)
 
+		res.data.forEach((image) => {
+			let storyItem = getStoryItem(image);
+			$("#storyList").append(storyItem);
+		});
+	}).fail(error =>{
+		console.log("실패", error)
+	});
 }
+storyLoad();
 
-function getStoryItem() {
+function getStoryItem(image) {
+	let item = `
+	<div class="story-list__item">
+\t\t\t\t<div class="sl__item__header">
+\t\t\t\t\t<div>
+\t\t\t\t\t\t<img class="profile-image" src="/upload/${image.user.profileImageUrl}"
+\t\t\t\t\t\t\tonerror="this.src='/images/person.jpeg'" />
+\t\t\t\t\t</div>
+\t\t\t\t\t<div>${image.user.username}</div>
+\t\t\t\t</div>
 
+\t\t\t\t<div class="sl__item__img">
+\t\t\t\t\t<img src="/upload/${image.postImageUrl}" />
+\t\t\t\t</div>
+
+\t\t\t\t<div class="sl__item__contents">
+\t\t\t\t\t<div class="sl__item__contents__icon">
+
+\t\t\t\t\t\t<button>
+\t\t\t\t\t\t\t<i class="fas fa-heart active" id="storyLikeIcon-1" onclick="toggleLike()"></i>
+\t\t\t\t\t\t</button>
+\t\t\t\t\t</div>
+
+\t\t\t\t\t<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>
+
+\t\t\t\t\t<div class="sl__item__contents__content">
+\t\t\t\t\t\t<p>${image.caption}</p>
+\t\t\t\t\t</div>
+
+\t\t\t\t\t<div id="storyCommentList-1">
+
+\t\t\t\t\t\t<div class="sl__item__contents__comment" id="storyCommentItem-1"">
+\t\t\t\t\t\t\t<p>
+\t\t\t\t\t\t\t\t<b>Lovely :</b> 부럽습니다.
+\t\t\t\t\t\t\t</p>
+
+\t\t\t\t\t\t\t<button>
+\t\t\t\t\t\t\t\t<i class="fas fa-times"></i>
+\t\t\t\t\t\t\t</button>
+
+\t\t\t\t\t\t</div>
+
+\t\t\t\t\t</div>
+
+\t\t\t\t\t<div class="sl__item__input">
+\t\t\t\t\t\t<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />
+\t\t\t\t\t\t<button type="button" onClick="addComment()">게시</button>
+\t\t\t\t\t</div>
+
+\t\t\t\t</div>
+\t\t\t</div>`;
+	return item;
 }
 
 // (2) 스토리 스크롤 페이징하기
