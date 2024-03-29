@@ -44,8 +44,15 @@ function getStoryItem(image) {
 \t\t\t\t<div class="sl__item__contents">
 \t\t\t\t\t<div class="sl__item__contents__icon">
 
-\t\t\t\t\t\t<button>
-\t\t\t\t\t\t\t<i class="fas fa-heart active" id="storyLikeIcon-${image.id}" onclick="toggleLike(${image.id})"></i>
+\t\t\t\t\t\t<button>`;
+
+	if (image.likesState) {
+		item += `<i class="fas fa-heart active" id="storyLikeIcon-${image.id}" onclick="toggleLike(${image.id})"></i>`;
+	} else {
+		item += `<i class="far fa-heart" id="storyLikeIcon-${image.id}" onclick="toggleLike(${image.id})"></i>`;
+	}
+	item += `
+
 \t\t\t\t\t\t</button>
 \t\t\t\t\t</div>
 

@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -51,6 +52,15 @@ public class ImageService {
     @Transactional(readOnly = true)
     public List<Image> 이미지스토리(Integer principalId, Pageable pageable){
         List<Image> images = imageRepository.mStory(principalId, pageable);
+
+        images.forEach((image) -> {
+            image.getLikes().forEach((like) -> {
+                if (Objects.equals(like.getUser().getId(), principalId)){
+                    image.setLikesState(true);
+                }
+            });
+        });
+
         return images;
     }
 }
