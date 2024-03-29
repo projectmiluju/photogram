@@ -8,6 +8,7 @@ import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,9 +48,9 @@ public class ImageService {
 //        System.out.println(imageEntity);
     }
 
-    @Transactional
-    public List<Image> 이미지스토리(Integer principalId){
-        List<Image> images = imageRepository.mStory(principalId);
+    @Transactional(readOnly = true)
+    public List<Image> 이미지스토리(Integer principalId, Pageable pageable){
+        List<Image> images = imageRepository.mStory(principalId, pageable);
         return images;
     }
 }
