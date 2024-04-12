@@ -198,6 +198,7 @@ function addComment(imageId) {
 
 	}).fail(error =>{
 		console.log("댓글쓰기 실패", error)
+		alert("오류 : " + error.responseJSON.data.content);
 	});
 
 
