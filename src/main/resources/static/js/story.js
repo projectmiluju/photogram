@@ -62,20 +62,23 @@ function getStoryItem(image) {
 \t\t\t\t\t\t<p>${image.caption}</p>
 \t\t\t\t\t</div>
 
-\t\t\t\t\t<div id="storyCommentList-${image.id}">
+\t\t\t\t\t<div id="storyCommentList-${image.id}">`;
 
-\t\t\t\t\t\t<div class="sl__item__contents__comment" id="storyCommentItem-1"">
-\t\t\t\t\t\t\t<p>
-\t\t\t\t\t\t\t\t<b>Lovely :</b> 부럽습니다.
-\t\t\t\t\t\t\t</p>
+	image.comments.forEach((comment) => {
+		item += `<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"">
+		<p>
+			<b>${comment.user.username} :</b> ${comment.content}
+		</p>
+		
+		<button>
+		<i class="fas fa-times"></i>
+		</button>
+		</div>`;
+	});
 
-\t\t\t\t\t\t\t<button>
-\t\t\t\t\t\t\t\t<i class="fas fa-times"></i>
-\t\t\t\t\t\t\t</button>
+	item += `
 
-\t\t\t\t\t\t</div>
-
-\t\t\t\t\t</div>
+</div>
 
 \t\t\t\t\t<div class="sl__item__input">
 \t\t\t\t\t\t<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
@@ -158,6 +161,11 @@ function addComment(imageId) {
 		content: commentInput.val()
 	}
 
+	if (data.content === "") {
+		alert("댓글을 작성해주세요!");
+		return;
+	}
+
 	$.ajax({
 		type: "post",
 		url: "/api/comment",
@@ -166,25 +174,25 @@ function addComment(imageId) {
 		dataType: "json"
 	}).done(res => {
 		console.log("댓글쓰기 성공", res)
-	}).fail(error =>{
-		console.log("댓글쓰기 실패", error)
-	});
 
-	if (data.content === "") {
-		alert("댓글을 작성해주세요!");
-		return;
-	}
+		let comment = res.data;
 
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
+		let content = `
+			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}""> 
 			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
+			      <b>${comment.user.username} :</b>
+			      ${comment.content}
 			    </p>
 			    <button><i class="fas fa-times"></i></button>
 			  </div>
 	`;
-	commentList.prepend(content);
+		commentList.prepend(content);
+
+	}).fail(error =>{
+		console.log("댓글쓰기 실패", error)
+	});
+
+
 	commentInput.val("");
 }
 
