@@ -150,8 +150,8 @@ function toggleLike(imageId) {
 // (4) 댓글쓰기
 function addComment(imageId) {
 
-	let commentInput = $("#storyCommentInput-${imageId}");
-	let commentList = $("#storyCommentList-${imgaeId}");
+	let commentInput = $(`#storyCommentInput-${imageId}`);
+	let commentList = $(`#storyCommentList-${imageId}`);
 
 	let data = {
 		imageId: imageId,
@@ -161,8 +161,8 @@ function addComment(imageId) {
 	$.ajax({
 		type: "post",
 		url: "/api/comment",
-		data: JSON.stringify(date),
-		contentType: "application/json: charset=utf-8",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
 		dataType: "json"
 	}).done(res => {
 		console.log("댓글쓰기 성공", res)
