@@ -62,7 +62,7 @@ function getStoryItem(image) {
 \t\t\t\t\t\t<p>${image.caption}</p>
 \t\t\t\t\t</div>
 
-\t\t\t\t\t<div id="storyCommentList-1">
+\t\t\t\t\t<div id="storyCommentList-${image.id}">
 
 \t\t\t\t\t\t<div class="sl__item__contents__comment" id="storyCommentItem-1"">
 \t\t\t\t\t\t\t<p>
@@ -78,8 +78,8 @@ function getStoryItem(image) {
 \t\t\t\t\t</div>
 
 \t\t\t\t\t<div class="sl__item__input">
-\t\t\t\t\t\t<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />
-\t\t\t\t\t\t<button type="button" onClick="addComment()">게시</button>
+\t\t\t\t\t\t<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
+\t\t\t\t\t\t<button type="button" onClick="addComment(${image.id})">게시</button>
 \t\t\t\t\t</div>
 
 \t\t\t\t</div>
@@ -148,14 +148,27 @@ function toggleLike(imageId) {
 }
 
 // (4) 댓글쓰기
-function addComment() {
+function addComment(imageId) {
 
-	let commentInput = $("#storyCommentInput-1");
-	let commentList = $("#storyCommentList-1");
+	let commentInput = $("#storyCommentInput-${imageId}");
+	let commentList = $("#storyCommentList-${imgaeId}");
 
 	let data = {
+		imageId: imageId,
 		content: commentInput.val()
 	}
+
+	$.ajax({
+		type: "post",
+		url: "/api/comment",
+		data: JSON.stringify(date),
+		contentType: "application/json: charset=utf-8",
+		dataType: "json"
+	}).done(res => {
+		console.log("댓글쓰기 성공", res)
+	}).fail(error =>{
+		console.log("댓글쓰기 실패", error)
+	});
 
 	if (data.content === "") {
 		alert("댓글을 작성해주세요!");
