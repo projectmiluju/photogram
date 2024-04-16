@@ -1,6 +1,7 @@
 package com.cos.photogramstart.handler.aop;
 
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,7 +25,6 @@ public class ValidationAdvice {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
             if (arg instanceof BindingResult) {
-                System.out.println("유효성 검사를 실행하는 함수입니다.");
                 BindingResult bindingResult = (BindingResult) arg;
 
                 if (bindingResult.hasErrors()) {
@@ -50,7 +50,15 @@ public class ValidationAdvice {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
             if (arg instanceof BindingResult) {
-                System.out.println("유효성 검사를 실행하는 함수입니다.");
+                BindingResult bindingResult = (BindingResult) arg;
+                if (bindingResult.hasErrors()) {
+                    Map<String, String> errorMap = new HashMap<>();
+                    for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                        errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+                        System.out.println(fieldError.getDefaultMessage());
+                    }
+                    throw new CustomValidationException("유효성 검사 실패함", errorMap);
+                }
             }
         }
 

@@ -39,23 +39,10 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signup")
-    public @ResponseBody String signup(@Valid SignupDto signupDto, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            Map<String ,String> errorMap = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-                System.out.println(error.getDefaultMessage());
-            }
-            throw new CustomValidationException("유효성 검사 실패", errorMap);
-        }else {
-            User user = signupDto.toEntity();
-//        log.info(signupDto.toString());
-
-            User userEntity = authService.회원가입(user);
-            System.out.println(userEntity);
-
-            return Script.href("회원가입에 성공하셨습니다.", "/auth/signin");
-
-        }
+    public String signup(@Valid SignupDto signupDto,
+                         BindingResult bindingResult){
+        User user = signupDto.toEntity();
+        authService.회원가입(user);
+        return "/auth/signin";
     }
 }
