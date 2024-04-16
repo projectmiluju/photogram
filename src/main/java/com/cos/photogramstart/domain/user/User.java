@@ -57,4 +57,11 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"user"})
     private List<Image> images;
+
+    @Override
+    public String toString() {
+        return "User [bio=" + bio + ", createDate=" + createDate + ", email=" + email + ", gender=" + gender + ", id="
+                + id + ", name=" + name + ", password=" + password + ", phone=" + phone + ", profileImageUrl="
+                + profileImageUrl + ", role=" + role + ", username=" + username + ", website=" + website + "]";
+    }
 }
