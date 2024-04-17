@@ -33,21 +33,12 @@ spring:
       max-file-size: 2MB
 
   profiles:
-    include: oauth2
+    include: oauth2, secret
 
   security:
     user:
       name: test
       password: 1234
-    oauth2:
-      client:
-        registration:
-          facebook:
-            client-id: 491966152678919
-            client-secret: 7b93115127c20e2e439a12606ed79a1b
-            scope:
-              - public_profile
-              - email
 
 
 
