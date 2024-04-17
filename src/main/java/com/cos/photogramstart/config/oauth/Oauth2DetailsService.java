@@ -2,9 +2,10 @@ package com.cos.photogramstart.config.oauth;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.user.User;
-
 import com.cos.photogramstart.domain.user.UserRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -22,10 +23,6 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -33,7 +30,7 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         Map<String, Object> userInfo = oAuth2User.getAttributes();
 
-        String username =  "facebook_" + (String) userInfo.get("id");
+        String username =  "facebook_" + userInfo.get("id");
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
         String email = (String) userInfo.get("email");
         String name = (String) userInfo.get("name");

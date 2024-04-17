@@ -1,6 +1,7 @@
 package com.cos.photogramstart.config;
 
 import com.cos.photogramstart.config.oauth.Oauth2DetailsService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
