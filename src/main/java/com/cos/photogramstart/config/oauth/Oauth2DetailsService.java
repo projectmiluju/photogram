@@ -6,7 +6,6 @@ import com.cos.photogramstart.domain.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -26,17 +25,30 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        Map<String, Object> userInfo = oAuth2User.getAttributes();
+        return processOAuth2User(userRequest, oAuth2User);
+    }
 
-        String username =  "facebook_" + userInfo.get("id");
+    private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+
+        OAuth2UserInfo oAuth2UserInfo = null;
+
+        if (userRequest.getClientRegistration().getClientName().equals("Google")){
+            oAuth2UserInfo = new GoogleInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getClientName().equals("Naver")){
+            oAuth2UserInfo = new NaverInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getClientName().equals("Kakao")){
+            oAuth2UserInfo = new KakaoInfo(oAuth2User.getAttributes());
+        }
+
+        String username = oAuth2UserInfo.getUsername();
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
-        String email = (String) userInfo.get("email");
-        String name = (String) userInfo.get("name");
+        String email = oAuth2UserInfo.getEmail();
+        String name = oAuth2UserInfo.getName();
 
         User userEntity = userRepository.findByUsername(username);
-        if (userEntity == null) {
+
+        if (userEntity == null){
             User user = User.builder()
                     .username(username)
                     .password(password)
@@ -44,8 +56,10 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
                     .name(name)
                     .role("ROLE_USER")
                     .build();
-            return new PrincipalDetails(userRepository.save(user), oAuth2User.getAttributes());
-        } else {
+
+            userEntity = userRepository.save(user);
+            return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
+        }else {
             return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
         }
     }
