@@ -35,7 +35,12 @@ spring:
   security:
     user:
       name: test
-      password: 1234   
+      password: 1234
+    oauth2:
+      client:
+        registration:
+
+
 
 # 파일이 저장될 커스텀 경로 #
 file:
