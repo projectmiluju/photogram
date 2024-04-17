@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -29,26 +30,26 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
         return processOAuth2User(userRequest, oAuth2User);
     }
 
-    private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+    private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oauth2User) {
 
         OAuth2UserInfo oAuth2UserInfo = null;
 
-        if (userRequest.getClientRegistration().getClientName().equals("Google")){
-            oAuth2UserInfo = new GoogleInfo(oAuth2User.getAttributes());
-        } else if (userRequest.getClientRegistration().getClientName().equals("Naver")){
-            oAuth2UserInfo = new NaverInfo(oAuth2User.getAttributes());
-        } else if (userRequest.getClientRegistration().getClientName().equals("Kakao")){
-            oAuth2UserInfo = new KakaoInfo(oAuth2User.getAttributes());
+        if (userRequest.getClientRegistration().getClientName().equals("Google")) {
+            oAuth2UserInfo = new GoogleInfo(oauth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getClientName().equals("Naver")) {
+            oAuth2UserInfo = new NaverInfo((Map)oauth2User.getAttributes().get("response"));
+        } else if (userRequest.getClientRegistration().getClientName().equals("Kakao")) {
+            oAuth2UserInfo = new KakaoInfo((Map)oauth2User.getAttributes());
         }
 
-        String username = oAuth2UserInfo.getUsername();
+        String username = Objects.requireNonNull(oAuth2UserInfo).getUsername();
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
 
         User userEntity = userRepository.findByUsername(username);
 
-        if (userEntity == null){
+        if (userEntity == null) {
             User user = User.builder()
                     .username(username)
                     .password(password)
@@ -58,9 +59,10 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
                     .build();
 
             userEntity = userRepository.save(user);
-            return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
-        }else {
-            return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
+
+            return new PrincipalDetails(userEntity, oauth2User.getAttributes());
+        } else {
+            return new PrincipalDetails(userEntity, oauth2User.getAttributes());
         }
     }
 }
