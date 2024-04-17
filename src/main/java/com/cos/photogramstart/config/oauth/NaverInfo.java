@@ -2,15 +2,15 @@ package com.cos.photogramstart.config.oauth;
 
 import java.util.Map;
 
-public class GoogleInfo extends OAuth2UserInfo{
+public class NaverInfo extends OAuth2UserInfo{
 
-    public GoogleInfo(Map<String, Object> attributes) {
+    public NaverInfo(Map<String, Object> attributes) {
         super(attributes);
     }
 
     @Override
     public String getId() {
-        return (String) attributes.get("sub");
+        return (String) attributes.get("id");
     }
 
     @Override
@@ -25,11 +25,11 @@ public class GoogleInfo extends OAuth2UserInfo{
 
     @Override
     public String getImageUrl() {
-        return (String) attributes.get("picture");
+        return "";
     }
 
     @Override
     public String getUsername() {
-        return "Google_" + (String) attributes.get("sub");
+        return "Naver_" + (String) attributes.get("id");
     }
 }
